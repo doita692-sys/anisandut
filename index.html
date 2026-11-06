@@ -1,0 +1,975 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LOVE GAME ❤️</title>
+
+<style>
+
+/* =====================
+   PENGATURAN DASAR
+===================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    min-height: 100vh;
+    color: #c52b79;
+
+    /* FOTO BACKGROUND DARI FOLDER */
+    background-image: url("images/background.jpg");
+
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+
+    overflow-x: hidden;
+}
+
+/* LAPISAN FOTO */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: rgba(255, 180, 215, .35);
+    z-index: -1;
+}
+
+/* =====================
+   SISTEM SLIDE
+===================== */
+
+.slide {
+    display: none;
+    min-height: 100vh;
+    padding: 35px 18px 90px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.slide.active {
+    display: flex;
+    animation: masuk .5s ease;
+}
+
+@keyframes masuk {
+    from {
+        opacity: 0;
+        transform: translateX(35px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* =====================
+   CARD
+===================== */
+
+.card {
+    width: 100%;
+    max-width: 520px;
+    padding: 30px 22px;
+    border-radius: 30px;
+
+    background: rgba(255,255,255,.88);
+    backdrop-filter: blur(10px);
+
+    box-shadow: 0 10px 40px #b8327955;
+    border: 2px solid #ffffffaa;
+}
+
+/* =====================
+   TULISAN
+===================== */
+
+h1 {
+    color: #ec4899;
+    font-size: 32px;
+    margin: 15px 0;
+}
+
+h2 {
+    margin: 15px 0;
+}
+
+p {
+    line-height: 1.8;
+    margin: 12px 0;
+}
+
+/* =====================
+   HATI BERDENYUT
+===================== */
+
+.heart {
+    font-size: 75px;
+    animation: detak 1s infinite;
+}
+
+@keyframes detak {
+    50% {
+        transform: scale(1.2);
+    }
+}
+
+/* =====================
+   BUTTON
+===================== */
+
+button {
+    border: none;
+    background: linear-gradient(135deg,#ff69a9,#e83e91);
+    color: white;
+
+    padding: 13px 22px;
+    border-radius: 30px;
+    margin: 8px 4px;
+
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    transition: .3s;
+}
+
+button:hover {
+    transform: scale(1.07);
+    box-shadow: 0 5px 15px #e83e9166;
+}
+
+/* =====================
+   INPUT
+===================== */
+
+input {
+    padding: 13px;
+    width: 90%;
+    border: 2px solid #ff9acb;
+    border-radius: 25px;
+    margin: 12px 0;
+    outline: none;
+}
+
+/* =====================
+   NAVIGASI
+===================== */
+
+.nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+
+    padding: 10px;
+    background: rgba(255,240,247,.95);
+
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    z-index: 900;
+    backdrop-filter: blur(10px);
+}
+
+.nav button {
+    font-size: 11px;
+    padding: 10px 13px;
+    margin: 4px;
+}
+
+/* =====================
+   GAME TANGKAP HATI
+===================== */
+
+#areaGame {
+    position: relative;
+    height: 260px;
+    background: #ffe2f0;
+    border-radius: 20px;
+    overflow: hidden;
+    margin: 15px 0;
+}
+
+.target {
+    position: absolute;
+    font-size: 35px;
+    cursor: pointer;
+    user-select: none;
+}
+
+/* =====================
+   FOTO GALERI
+===================== */
+
+.galeri {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.galeri img {
+    width: 125px;
+    height: 145px;
+    object-fit: cover;
+    border-radius: 15px;
+    border: 3px solid white;
+    box-shadow: 0 4px 12px #0002;
+}
+
+/* =====================
+   ANIMASI HATI
+===================== */
+
+.floating {
+    position: fixed;
+    bottom: -30px;
+    font-size: 25px;
+    pointer-events: none;
+    z-index: 100;
+    animation: terbang 6s linear forwards;
+}
+
+@keyframes terbang {
+    to {
+        transform: translateY(-110vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* =====================
+   RESPONSIVE
+===================== */
+
+@media(max-width:480px) {
+    h1 {
+        font-size: 26px;
+    }
+
+    .card {
+        padding: 25px 15px;
+    }
+
+    .nav button {
+        font-size: 10px;
+        padding: 9px;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+
+<!-- =====================
+     SLIDE 1: WELCOME
+===================== -->
+
+<section class="slide active" id="s1">
+
+<div class="card">
+
+    <div class="heart">❤️</div>
+
+    <h1>HELLO SAYANG!</h1>
+
+    <h2>Welcome to Love Game 🥰</h2>
+
+    <p>
+        Hai manusia paling spesial!
+        Aku punya sesuatu yang spesial buat kamu.
+    </p>
+
+    <p>
+        Siap masuk ke dunia penuh cinta?
+    </p>
+
+    <input
+        type="text"
+        id="nama"
+        placeholder="Masukkan nama kamu..."
+    >
+
+    <br>
+
+    <button onclick="mulai()">
+        MULAI PETUALANGAN ❤️
+    </button>
+
+</div>
+</section>
+
+
+<!-- =====================
+     SLIDE 2: PESAN
+===================== -->
+
+<section class="slide" id="s2">
+
+<div class="card">
+
+    <div class="heart">🥰</div>
+
+    <h1 id="sapaan">HAI SAYANG!</h1>
+
+    <p>
+        Aku cuma mau bilang sesuatu.
+    </p>
+
+    <p>
+        Terima kasih sudah hadir dalam hidupku.
+        Kamu adalah alasan aku tersenyum.
+    </p>
+
+    <p>
+        Jangan pernah bosan sama aku ya!
+        Karena aku mau terus menyayangimu. 💗
+    </p>
+
+    <button onclick="pindah(3)">
+        LANJUT SAYANG ❤️
+    </button>
+
+</div>
+</section>
+
+
+<!-- =====================
+     SLIDE 3: MENU
+===================== -->
+
+<section class="slide" id="s3">
+
+<div class="card">
+
+    <div class="heart">💝</div>
+
+    <h1>MENU PERMAINAN</h1>
+
+    <p>
+        Pilih permainan yang ingin kamu mainkan!
+    </p>
+
+    <button onclick="pindah(4)">
+        🎯 TEBAK ANGKA
+    </button>
+
+    <button onclick="resetKuis();pindah(5)">
+        💞 KUIS CINTA
+    </button>
+
+    <button onclick="pindah(6)">
+        ❤️ TANGKAP HATI
+    </button>
+
+    <button onclick="pindah(7)">
+        💌 GALERI FOTO
+    </button>
+
+    <button onclick="pindah(8)">
+        💌 SURAT CINTA
+    </button>
+
+    <button onclick="kejutan()">
+        🎁 KEJUTAN
+    </button>
+
+</div>
+</section>
+
+
+<!-- =====================
+     SLIDE 4: TEBAK ANGKA
+===================== -->
+
+<section class="slide" id="s4">
+
+<div class="card">
+
+    <h1>🎯 TEBAK ANGKA CINTA</h1>
+
+    <p>
+        Aku menyimpan angka rahasia dari 1 sampai 10.
+    </p>
+
+    <input
+        type="number"
+        id="angka"
+        min="1"
+        max="10"
+        placeholder="Tebak angka..."
+    >
+
+    <br>
+
+    <button onclick="tebakAngka()">
+        TEBAK SEKARANG ❤️
+    </button>
+
+    <p id="hasilTebak"></p>
+
+    <button onclick="pindah(3)">
+        KEMBALI
+    </button>
+
+</div>
+</section>
+
+
+<!-- =====================
+     SLIDE 5: KUIS CINTA
+===================== -->
+
+<section class="slide" id="s5">
+
+<div class="card">
+
+    <h1>💞 KUIS CINTA</h1>
+
+    <h3 id="soal">
+        Seberapa sayang kamu sama aku?
+    </h3>
+
+    <div id="jawaban"></div>
+
+    <p id="hasilKuis"></p>
+
+    <button onclick="pindah(3)">
+        KEMBALI KE MENU
+    </button>
+
+</div>
+</section>
+
+
+<!-- =====================
+     SLIDE 6: TANGKAP HATI
+===================== -->
+
+<section class="slide" id="s6">
+
+<div class="card">
+
+    <h1>❤️ TANGKAP HATI</h1>
+
+    <p>
+        Tangkap 10 hati dalam waktu 20 detik!
+    </p>
+
+    <h3>
+        Skor: <span id="skor">0</span>
+    </h3>
+
+    <h3>
+        Waktu: <span id="waktu">20</span>
+    </h3>
+
+    <div id="areaGame"></div>
+
+    <button onclick="mulaiGame()">
+        MULAI GAME 🎮
+    </button>
+
+    <p id="hasilGame"></p>
+
+    <button onclick="pindah(3)">
+        KEMBALI
+    </button>
+
+</div>
+</section>
+
+
+<!-- =====================
+     SLIDE 7: GALERI FOTO
+===================== -->
+
+<section class="slide" id="s7">
+
+<div class="card">
+
+    <div class="heart">📸</div>
+
+    <h1>OUR LITTLE MEMORIES</h1>
+
+    <p>
+        Beberapa kenangan manis yang selalu ingin aku ingat.
+    </p>
+
+    <div class="galeri">
+
+        <img src="images/foto1.jpg" alt="Kenangan 1">
+
+        <img src="images/foto2.jpg" alt="Kenangan 2">
+
+    </div>
+
+    <p>
+        Setiap foto punya cerita, dan setiap cerita punya kamu. ❤️
+    </p>
+
+    <button onclick="pindah(3)">
+        KEMBALI KE MENU
+    </button>
+
+</div>
+</section>
+
+
+<!-- =====================
+     SLIDE 8: SURAT CINTA
+===================== -->
+
+<section class="slide" id="s8">
+
+<div class="card">
+
+    <div class="heart">💌</div>
+
+    <h1>UNTUK KAMU SAYANG</h1>
+
+    <p>
+        Sayang, mungkin aku bukan orang paling sempurna.
+        Tapi aku akan selalu berusaha membuatmu bahagia.
+    </p>
+
+    <p>
+        Kalau aku menyebalkan, maafkan aku.
+        Kalau aku terlalu manja, maklumilah aku.
+    </p>
+
+    <p>
+        Karena satu hal yang pasti,
+        aku nggak pernah bosan menyayangimu.
+    </p>
+
+    <h2>I LOVE YOU FOREVER ❤️</h2>
+
+    <button onclick="pindah(9)">
+        BUKA KEJUTAN 🎁
+    </button>
+
+</div>
+</section>
+
+
+<!-- =====================
+     SLIDE 9: KEJUTAN
+===================== -->
+
+<section class="slide" id="s9">
+
+<div class="card">
+
+    <div class="heart">💖</div>
+
+    <h1>AKU SAYANG KAMU!</h1>
+
+    <h2 id="namaAkhir">MY LOVE ❤️</h2>
+
+    <p>
+        Kalau aku diberi kesempatan memilih
+        seribu kali, aku tetap ingin memilih kamu.
+    </p>
+
+    <p>
+        Jangan lupa bahagia ya sayang!
+        Kamu sangat berarti buat aku.
+    </p>
+
+    <button onclick="alert('MUACHHH! 😘❤️')">
+        KIRIM CIUM JAUH 😘
+    </button>
+
+    <button onclick="pindah(1)">
+        ULANGI DARI AWAL
+    </button>
+
+</div>
+</section>
+
+
+<!-- =====================
+     NAVIGASI
+===================== -->
+
+<div class="nav">
+
+    <button onclick="pindah(1)">🏠 HOME</button>
+
+    <button onclick="pindah(2)">💗 LOVE</button>
+
+    <button onclick="pindah(3)">🎮 GAME</button>
+
+    <button onclick="pindah(7)">📸 FOTO</button>
+
+    <button onclick="pindah(8)">💌 SURAT</button>
+
+</div>
+
+
+<script>
+
+/* =====================
+   NAMA PASANGAN
+===================== */
+
+let nama = "";
+
+function mulai() {
+
+    nama = document.getElementById("nama").value.trim();
+
+    if(nama === "") {
+
+        alert("Isi nama kamu dulu dong sayang! 😘");
+
+        return;
+    }
+
+    document.getElementById("sapaan").innerText =
+    "HAI " + nama.toUpperCase() + " SAYANG! ❤️";
+
+    document.getElementById("namaAkhir").innerText =
+    nama.toUpperCase() + " ❤️";
+
+    pindah(2);
+}
+
+
+/* =====================
+   PINDAH SLIDE
+===================== */
+
+function pindah(n) {
+
+    if(n !== 6) {
+        hentikanGame();
+    }
+
+    document.querySelectorAll(".slide").forEach(slide => {
+
+        slide.classList.remove("active");
+
+    });
+
+    document.getElementById("s"+n).classList.add("active");
+
+    window.scrollTo(0,0);
+}
+
+
+/* =====================
+   TEBAK ANGKA
+===================== */
+
+let rahasia = Math.floor(Math.random()*10)+1;
+
+function tebakAngka() {
+
+    let angka = Number(document.getElementById("angka").value);
+
+    let hasil = document.getElementById("hasilTebak");
+
+    if(!Number.isInteger(angka) || angka < 1 || angka > 10) {
+
+        hasil.innerText = "Masukkan angka 1 sampai 10 ya sayang!";
+
+        return;
+    }
+
+    if(angka === rahasia) {
+
+        hasil.innerText =
+        "BENARRR! KAMU MEMANG JODOHKU! 😍❤️";
+
+        rahasia = Math.floor(Math.random()*10)+1;
+
+    }
+
+    else if(angka > rahasia) {
+
+        hasil.innerText = "Terlalu besar sayang! Coba lagi 😝";
+
+    }
+
+    else {
+
+        hasil.innerText = "Terlalu kecil sayang! Coba lagi 😘";
+
+    }
+}
+
+
+/* =====================
+   KUIS CINTA
+===================== */
+
+let nomor = 0;
+
+let soal = [
+
+    "Seberapa sayang kamu sama aku?",
+
+    "Kalau aku sedang sedih kamu akan?",
+
+    "Kalau kita sedang berjauhan?",
+
+    "Siapa orang paling spesial?",
+
+    "Kalau aku minta peluk?"
+
+];
+
+let pilihan = [
+
+    ["Sayang banget ❤️","1000% 😘","Tidak terhingga 💗"],
+
+    ["Menghiburku 🥰","Memelukku 🤗","Menemaniku ❤️"],
+
+    ["Tetap setia ❤️","Selalu komunikasi 💌","Kangen terus 😭"],
+
+    ["KAMU! 😍","KAMU BANGET! 💗","KAMU SELAMANYA!"],
+
+    ["Peluk erat 🤗","Peluk lama ❤️","Nggak mau lepas 😘"]
+
+];
+
+function resetKuis() {
+
+    nomor = 0;
+
+    document.getElementById("hasilKuis").innerText = "";
+
+    tampilKuis();
+
+}
+
+function tampilKuis() {
+
+    document.getElementById("soal").innerText = soal[nomor];
+
+    document.getElementById("jawaban").innerHTML =
+
+    pilihan[nomor].map(j =>
+
+        `<button onclick="jawabKuis()">${j}</button>`
+
+    ).join("");
+
+}
+
+function jawabKuis() {
+
+    nomor++;
+
+    if(nomor >= soal.length) {
+
+        document.getElementById("soal").innerText =
+        "KAMU LOLOS UJIAN CINTA! ❤️";
+
+        document.getElementById("jawaban").innerHTML = "";
+
+        document.getElementById("hasilKuis").innerText =
+
+        "SELAMAT " + nama.toUpperCase() +
+
+        "! KAMU RESMI JADI MANUSIA PALING BUCIN! 😍";
+
+        return;
+    }
+
+    tampilKuis();
+
+}
+
+
+/* =====================
+   GAME TANGKAP HATI
+===================== */
+
+let skor = 0;
+
+let detik = 20;
+
+let aktif = false;
+
+let timer;
+
+let interval;
+
+function mulaiGame() {
+
+    hentikanGame();
+
+    skor = 0;
+
+    detik = 20;
+
+    aktif = true;
+
+    document.getElementById("skor").innerText = skor;
+
+    document.getElementById("waktu").innerText = detik;
+
+    document.getElementById("hasilGame").innerText = "";
+
+    buatHati();
+
+    interval = setInterval(buatHati,700);
+
+    timer = setInterval(() => {
+
+        detik--;
+
+        document.getElementById("waktu").innerText = detik;
+
+        if(detik <= 0) {
+
+            selesaiGame();
+
+        }
+
+    },1000);
+
+}
+
+function buatHati() {
+
+    if(!aktif) return;
+
+    let area = document.getElementById("areaGame");
+
+    area.innerHTML = "";
+
+    let hati = document.createElement("span");
+
+    hati.className = "target";
+
+    hati.innerText = "❤️";
+
+    hati.style.left = Math.random()*85+"%";
+
+    hati.style.top = Math.random()*75+"%";
+
+    hati.onclick = function() {
+
+        if(!aktif) return;
+
+        skor++;
+
+        document.getElementById("skor").innerText = skor;
+
+        if(skor >= 10) {
+
+            selesaiGame();
+
+        } else {
+
+            buatHati();
+
+        }
+
+    };
+
+    area.appendChild(hati);
+
+}
+
+function selesaiGame() {
+
+    aktif = false;
+
+    clearInterval(interval);
+
+    clearInterval(timer);
+
+    document.getElementById("areaGame").innerHTML = "💖💖💖";
+
+    document.getElementById("hasilGame").innerText =
+
+    skor >= 10 ?
+
+    "KAMU MENANG! AKU SAYANG KAMU! 😍❤️" :
+
+    "WAKTU HABIS! COBA LAGI SAYANG! 💗";
+
+}
+
+function hentikanGame() {
+
+    aktif = false;
+
+    clearInterval(interval);
+
+    clearInterval(timer);
+
+}
+
+
+/* =====================
+   KEJUTAN
+===================== */
+
+function kejutan() {
+
+    pindah(9);
+
+    for(let i=0;i<30;i++) {
+
+        setTimeout(buatHatiTerbang,i*100);
+
+    }
+
+}
+
+
+/* =====================
+   ANIMASI HATI
+===================== */
+
+function buatHatiTerbang() {
+
+    let h = document.createElement("div");
+
+    h.className = "floating";
+
+    h.innerText = ["❤️","💗","💖","💕","💘"][
+
+        Math.floor(Math.random()*5)
+
+    ];
+
+    h.style.left = Math.random()*100+"%";
+
+    document.body.appendChild(h);
+
+    setTimeout(() => h.remove(),6000);
+
+}
+
+setInterval(buatHatiTerbang,1200);
+
+
+/* =====================
+   MULAI KUIS
+===================== */
+
+tampilKuis();
+
+</script>
+
+</body>
+</html>
